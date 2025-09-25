@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+*.venv
+*.egg-info/
+
+# Terraform (only inside iac/)
+iac/**/*.tfstate
+iac/**/*.tfstate.backup
+iac/**/.terraform/
+iac/**/.terraform.lock.hcl
+iac/**/*.tfvars
+
+# Docker
+*.log
+*.pid
+docker-compose.override.yml
+local/*.env
+*.tar
+
+# Kubernetes (if any sensitive configs)
+kubernetes/*.secret.yml
+*.kubeconfig
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*.bak
+
+# Misc
+.DS_Store

@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-hello-world
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-hello-world
+  template:
+    metadata:
+      labels:
+        app: flask-hello-world
+    spec:
+      containers:
+        - name: flask-hello-world
+          image: registry.digitalocean.com/kubernetes-image-registry-flask-app/flask-hello-world:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5001
+          resources:
+            requests:
+              memory: "32Mi"
+              cpu: "100m"
+            limits:
+              memory: "64Mi"
+              cpu: "250m"
+          env:
+            - name: FLASK_ENV
+              value: "production"
+            - name: APP_SECRET_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: flask-config
+                  key: secret-key
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5001
+            initialDelaySeconds: 10
+            periodSeconds: 20
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5001
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
