@@ -31,7 +31,7 @@ pipeline {
                         ]
                     )
                     if (deployApproval) {
-                        deployToK8s()
+                        deploytok8s()
                     } else {
                         echo "Deployment skipped by user."
                     }
