@@ -13,6 +13,7 @@ module "k8s_cluster" {
     region               = local.region
     cluster_version      = local.cluster_version
     ha                   = false
+    registry_integration = true
     tags                 = ["flask", "k8s"]
     node_pool_name       = "default"
     node_pool_size       = "s-1vcpu-2gb"
