@@ -1,7 +1,7 @@
 def call() {
     def imageTag = env.BUILD_NUMBER
 
-    withCredentials([file(credentialsId: env.KUBECONFIG_CRED, variable: 'KUBECONFIG_FILE')]) {
+    withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_FILE')]) {
         sh """
         export KUBECONFIG="\$KUBECONFIG_FILE"
         sed -i "s|${env.REGISTRY_URL}/${env.IMAGE_NAME}:latest|${env.REGISTRY_URL}/${env.IMAGE_NAME}:${imageTag}|g" kubernetes/deployment.yaml || true
