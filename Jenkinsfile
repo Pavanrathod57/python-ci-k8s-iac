@@ -22,7 +22,20 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                deploytok8s(REGISTRY_URL, IMAGE_NAME)
+                script {
+                        def deployApproval = input(
+                        message: "Deploy to Kubernetes?",
+                        ok: "Yes",
+                        parameters: [
+                        booleanParam(defaultValue: false, description: 'Check to deploy', name: 'DEPLOY')
+                        ]
+                    )
+                    if (deployApproval) {
+                        deployToK8s()
+                    } else {
+                        echo "Deployment skipped by user."
+                    }
+                }
             }
         }
 
